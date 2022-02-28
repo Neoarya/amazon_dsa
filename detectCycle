@@ -1,0 +1,62 @@
+--------------HashSet Approach-------------------t.c = O(n) and s.c = O(n)
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        HashSet<ListNode> st = new HashSet<>();
+        
+        while(head!=null){
+            if(st.contains(head)) return head;
+            st.add(head);
+            head = head.next;
+        }
+        return null;
+    }
+}
+
+--------------2 pointer approach-----------------(best approach) t.c = O(n) and s.c = O(1)
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null || head.next==null) return null;
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode entry = head;
+        
+        while(fast.next!=null && fast.next.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+            
+            if(slow == fast){
+                while(slow!=entry){
+                    entry = entry.next;
+                    slow = slow.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+}
